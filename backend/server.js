@@ -5,6 +5,8 @@ const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/userRoutes');
 const { errorHandler } = require('./middleware/errorMiddleware');
 const welcomeRoutes = require('./routes/welcome');
+const verifyUser = require('./middleware/verifyUser'); // Import the updated middleware
+
 require('dotenv').config();
 
 const app = express();
@@ -12,6 +14,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Apply the middleware globally
+app.use(verifyUser);
 
 app.use('/api', welcomeRoutes);
 app.use('/api/auth', authRoutes);
